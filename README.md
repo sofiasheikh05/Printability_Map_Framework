@@ -1,4 +1,4 @@
-# Enhanced and User-Friendly Laser Powder Bed Fusion Code
+#Code Breakdown
 
 This Python script is designed for analyzing melt pool dimensions, defects, and printability in Laser Powder Bed Fusion (LPBF) processes. The script has been refactored to enhance readability and usability by following Python best practices, modularization, and adding helpful comments.
 
