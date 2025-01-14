@@ -1,12 +1,15 @@
 #Code Breakdown
 
-This Python script is designed for analyzing melt pool dimensions, defects, and printability in Laser Powder Bed Fusion (LPBF) processes. The script has been refactored to enhance readability and usability by following Python best practices, modularization, and adding helpful comments.
+
+
+This Python script is designed to analyze melt pool dimensions, defects, and printability in Laser Powder Bed Fusion (L-PBF) processes. The script can be used in a supercomputing environment to run three different versions of the Eagar-Tsai Model (the analytical model, the pre-trained NN model, and the scaled E-T model). The melt pool dimensions are then used as inputs to defined criteria that determine the boundaries for the macroscopic defects: lack of fusion (LOF), keyholing, and balling. For lack of fusion, two criteria are evaluated. For keyholing, three criteria were evaluated, while for balling, two criteria were evaluated. A total of 12 criteria are evaluated for a single composition. In addition the composition-based criteria for balling is also evaluated for the material. 
 
 ## Key Features
+- Calculates material properties using the rule of mixtures and composition-based feature vector (CBFV) using the Oliynyk dataset
+- In addition to these properties, other properties are calculated
 - Predicts melt pool dimensions using analytical, scaled, or neural network-based E-T models.
-- Calculates thermodynamic properties such as density, melting temperature, and boiling temperature.
-- Supports parallel processing for efficient computation.
-- Includes detailed logging for monitoring execution progress and errors.
+- 
+
 
 ---
 
@@ -32,7 +35,7 @@ You can select the E-T model type by modifying the `e_t_model_type` variable in 
 
 ---
 
-## Modularized Functions
+## Functions
 
 ### 1. `ROM_THERMO(results_df)`
 Calculates thermodynamic properties (molecular weight, density, melting temperature, etc.) for each composition.
@@ -63,25 +66,6 @@ Calculates the cooling rate of the melt pool.
 
 ---
 
-## Enhancements
-
-1. **Improved Readability**
-   - Added clear comments and docstrings to each function.
-   - Organized imports and eliminated redundancies.
-
-2. **Error Handling**
-   - Added `try-except` blocks to handle common errors (e.g., missing files, invalid inputs).
-
-3. **Parallel Processing**
-   - Utilized `concurrent.futures.ThreadPoolExecutor` for efficient computation.
-
-4. **Logging**
-   - Included logging for tracking progress and debugging.
-
-5. **Parameter Configurations**
-   - Simplified parameter configurations using dictionaries and modularized setups.
-
----
 
 ## Sample Output
 
@@ -95,7 +79,7 @@ Results are saved as CSV files:
 
 ## Example Execution Flow
 
-1. Load and preprocess the input composition data.
+1. Load and preprocess the input composition data as well as the THERMOCALC calculated properties. 
 2. Generate thermodynamic properties using `ROM_THERMO()`.
 3. Compute dimensionless parameters with `melt_pool_dimensionless()`.
 4. Select and execute the appropriate E-T model (`analytical`, `scaled`, or `NN`).
@@ -104,7 +88,7 @@ Results are saved as CSV files:
 ---
 
 ## Contributing
-Contributions are welcome! If you encounter any issues or have suggestions, please create an issue or submit a pull request on GitHub.
+Contributions are welcome! If you encounter any issues or have suggestions, please email sofiasheikh@tamu.edu
 
 ---
 
