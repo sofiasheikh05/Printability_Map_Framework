@@ -16,10 +16,11 @@ This Python script is designed to analyze melt pool dimensions, defects, and pri
 ## Setup
 
 ### Prerequisites
-- Python 3.7+
+- Python 3.6+
 - Required Libraries:
   ```bash
-  pip install numpy pandas scipy keras scikit-learn pymatgen mendeleev matplotlib
+  pip install -r requirements.txt
+
   ```
 
 ### Usage
