@@ -45,7 +45,7 @@ Calculates thermodynamic properties (molecular weight, density, melting temperat
 Computes all parameters needed for inputs to the Eagar-Tsai thermal model, including dimensionless parameters such as B and p in Ref 1, for the scaled E-T model. This marks the last function that calculates all needed to run any E-T thermal models. 
 
 ### 3. `scaled_ET`
-It implements the scaled E-T model referred to in Ref. 2. It reduces the time needed to implement the E-T analytical thermal model. However, there are some constraints involved with using the scaled model, which I would refer users to read about before using it. 
+It implements the scaled E-T model referred to in Ref. 2, reducing the time needed to implement the E-T analytical thermal model. However, there are some constraints involved with using the scaled model, which I would recommend users read about before using it. 
 
 ### 4. `ET-NN`
 Implements the pre-trained ET-NN model discussed in the published article associated with this GitHub repository. Inputs are retrieved from the calculated thermal properties and the user-defined values for process parameters. 
@@ -57,25 +57,24 @@ Applies a neural network-based E-T model for melt pool dimension predictions.
 Implements the correction to depth after keyholing is identified. The formulation is discussed in depth in Ref 3. 
 
 ### 7. `keyholing_normalized`
-Defines keyholing criteria based on normalized enthalpy and geometric conditions.
+The keyholing criteria, KH2 and KH3, defined in Ref 4 and Ref 5, are calculated so that they can be analyzed using the function keyholing. 
 
 ### 8. `cooling_rate`
-Evaluates lack-of-fusion criteria for defect analysis.
+Calculates the cooling rate in the L-PBF process. 
 
 ### 9. `keyholing_criteria`
-Identifies balling defects based on solidification and spreading times.
+All three keyholing criteria are evaluated to analyze whether the criterion defining the keyholing boundary for each boundary condition is passed or not to indicate whether keyholing occurs. 
 
 ### 10. `lof_criteria`
-Calculates the cooling rate of the melt pool.
+The LOF boundary conditions LOF2 are evaluated and analyzed for each depth data point.
 
 ### 10. `balling`
-Calculates the cooling rate of the melt pool.
+A material's susceptibility to balling is evaluated. The composition-based balling criteria formulation is discussed in Ref 6.
 
-### 10. `hot_cracking`
-Calculates the cooling rate of the melt pool.
----
+### 11. `hot_cracking`
+Calculates the hot cracking susceptibility using the Kou criteria. 
 
-### Boundary Conditions used to Evaluate Macroscopic Defects:
+# Boundary Conditions Used to Evaluate Macroscopic Defects:
 
 
 | **Defect Type** | **Label** | **Equation** |
@@ -88,24 +87,34 @@ Calculates the cooling rate of the melt pool.
 |                 | KH2       | ΔH/hs = AP / (π hs √(α va³)) > π T_boiling / T_liquidus |
 |                 | KH3       | Ke = ηP / ((T_liquidus - T₀) πρCp √(αν r₀³)) > 6 |
 
+The code evaluates each combination criteria, and there are 12 columns with results, with defects (including defect-free print, which is labeled as Success) labeled in these columns for each P-V point. 
 
+---
+##  Results are saved as CSV files:
 
-## Sample Output
+## File 1. Parameters
+- file format: `parameters_<file_name>_<e_t_model_type>.csv`
+- outputs the process parameters defined in user inputs as well as the resulting energy density values for each point.
 
-Results are saved as CSV files:
-- Parameters: `parameters_<file_name>_<e_t_model_type>.csv`
-- Dimensionless Data: `dimensionless_df_<file_name>_<e_t_model_type>.csv`
-- E-T Model Predictions: `ET_<file_name>_<e_t_model_type>.csv`
-- Final Outputs: `Package_output_<file_name>_<e_t_model_type>.csv`
+## File 2. E-T Model Predictions:
+- file format: `ET_<file_name>_<e_t_model_type>.csv`
+- Outputs the results of the E-T thermal model results along with some thermal properties calculated through the package.
+
+  ## File 3. Material Properties:
+- file format: `Material_PROP_<file_name>_<e_t_model_type>.csv`
+- Outputs all the material thermal properties calculated using the package in a single file.
+
+## File 4. Final (Main) Output:
+- file format: 'Package_output_<file_name>_<e_t_model_type>.csv`
+-  Composition, process parameters, melt pool geometry and each criteria combination results indicating what defect is predicted for each P-V point is outputted.
 
 ---
 
 ## Example Execution Flow
 
-1. Load and preprocess the input composition data as well as the THERMOCALC calculated properties. 
+1. Load and preprocess the input composition data and the THERMOCALC calculated properties. 
 2. Generate thermodynamic properties using `ROM_THERMO()`.
 3. Compute dimensionless parameters with `melt_pool_dimensionless()`.
-4. Select and execute the appropriate E-T model (`analytical`, `scaled`, or `NN`).
 5. Analyze defects and save results.
 
 ---
