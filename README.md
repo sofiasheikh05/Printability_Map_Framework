@@ -26,7 +26,7 @@ This Python script is designed to analyze melt pool dimensions, defects, and pri
 ### Usage
 Run the script using:
 ```bash
-python main.py
+05_Printability_Package.py
 ```
 
 You can select the E-T model type by modifying the `e_t_model_type` variable in the `main()` function to one of the following:
@@ -36,36 +36,58 @@ You can select the E-T model type by modifying the `e_t_model_type` variable in 
 
 ---
 
-## Functions
+## Main Functions
 
-### 1. `ROM_THERMO(results_df)`
+### 1. `ROM_THERMO`
 Calculates thermodynamic properties (molecular weight, density, melting temperature, etc.) for each composition.
 
-### 2. `melt_pool_dimensionless(data)`
-Computes dimensionless parameters for the melt pool based on input parameters and material properties.
+### 2. `melt_pool_dimensionless`
+Computes all parameters needed for inputs to the Eagar-Tsai thermal model, including dimensionless parameters such as B and p in Ref 1, for the scaled E-T model. This marks the last function that calculates all needed to run any E-T thermal models. 
 
-### 3. `scaled_ET(dimensionless_df)`
-Implements the scaled E-T model to predict melt pool dimensions (length, width, depth).
+### 3. `scaled_ET`
+It implements the scaled E-T model referred to in Ref. 2. It reduces the time needed to implement the E-T analytical thermal model. However, there are some constraints involved with using the scaled model, which I would refer users to read about before using it. 
 
-### 4. `ET_NN(dimensionless_df)`
+### 4. `ET-NN`
+Implements the pre-trained ET-NN model discussed in the published article associated with this GitHub repository. Inputs are retrieved from the calculated thermal properties and the user-defined values for process parameters. 
+
+### 5. `analytical_ET`
 Applies a neural network-based E-T model for melt pool dimension predictions.
 
-### 5. `analytical_ET(dimensionless_df)`
-Uses the analytical E-T model to compute melt pool dimensions and temperature distributions.
+### 6. `G-S Depth`
+Implements the correction to depth after keyholing is identified. The formulation is discussed in depth in Ref 3. 
 
-### 6. `keyholing_criteria(dimensionless_df)`
+### 7. `keyholing_normalized`
 Defines keyholing criteria based on normalized enthalpy and geometric conditions.
 
-### 7. `lof_criteria(dimensionless_df)`
+### 8. `cooling_rate`
 Evaluates lack-of-fusion criteria for defect analysis.
 
-### 8. `balling(dimensionless_df, T_amb=[288])`
+### 9. `keyholing_criteria`
 Identifies balling defects based on solidification and spreading times.
 
-### 9. `cooling_rate(dimensionless_df)`
+### 10. `lof_criteria`
 Calculates the cooling rate of the melt pool.
 
+### 10. `balling`
+Calculates the cooling rate of the melt pool.
+
+### 10. `hot_cracking`
+Calculates the cooling rate of the melt pool.
 ---
+
+### Boundary Conditions used to Evaluate Macroscopic Defects:
+
+
+| **Defect Type** | **Label** | **Equation** |
+|-----------------|-----------|--------------|
+| Lack-of-Fusion  | LOF1      | D ≤ t        |
+|                 | LOF2      | (h/W)² + th/(th+D) ≥ 1 |
+| Balling         | Ball1     | L/W ≥ 2.3     |
+|                 | Ball2     | πW/L < √(2/3) |
+| Keyholing       | KH1       | W/D ≤ 2.5     |
+|                 | KH2       | ΔH/hs = AP / (π hs √(α va³)) > π T_boiling / T_liquidus |
+|                 | KH3       | Ke = ηP / ((T_liquidus - T₀) πρCp √(αν r₀³)) > 6 |
+
 
 
 ## Sample Output
@@ -93,4 +115,3 @@ Contributions are welcome! If you encounter any issues or have suggestions, plea
 
 ---
 
-For detailed implementation and additional features, refer to the in-code comments or the project documentation.
