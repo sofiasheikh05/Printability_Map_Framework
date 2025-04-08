@@ -1237,9 +1237,9 @@ if __name__ == '__main__':
     #Upload Thermocalc calculations   
     PATH = os.getcwd()
 	
-    thermo_calc_df = pd.read_csv(PATH + '/THERMOCALC_Files/' 'THERMOCALC_TOTAL.csv')
+    thermo_calc_df = pd.read_csv('THERMOCALC_Cantor.csv')
     #upload composition file
-    file_name = 'Database_Al'
+    file_name = 'Cantor'
     composition_df = pd.read_csv(file_name + '.csv')
     
     #define processing parameters 
