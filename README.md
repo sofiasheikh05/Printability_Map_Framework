@@ -5,11 +5,10 @@
 This Python script analyzes melt pool dimensions, defects, and printability in Laser Powder Bed Fusion (L-PBF) processes. The script can be used in a supercomputing environment to run three different versions of the Eagar-Tsai Model (the analytical model, the pre-trained NN model, and the scaled E-T model). The melt pool dimensions are then used as inputs to defined criteria that determine the boundaries for the macroscopic defects: lack of fusion (LOF), keyholing, and balling. For lack of fusion, two criteria are evaluated. For keyholing, three criteria were assessed, while for balling, two criteria were evaluated. A total of 12 criteria are estimated for a single composition. In addition,the composition-based criteria for balling are also assessed for the material. 
 
 ## Key Features
-- Calculates material properties using the rule of mixtures and composition-based feature vector (CBFV) using the Oliynyk dataset
+- Calculates material properties using the rule of mixtures and composition-based feature vector (CBFV) using the Oliynyk dataset (download from https://github.com/kaaiian/CBFV) 
 - In addition to these properties, other properties are calculated
 - Predicts melt pool dimensions using analytical, scaled, or neural network-based E-T models.
   
-
 
 ---
 
@@ -35,6 +34,18 @@ You can select the E-T model type by modifying the `e_t_model_type` variable in 
 - `NN`
 
 ---
+
+## Inputs
+
+1. `thermo_calc_df`: inputs from ThermoCalc in CSV format
+2.  `file_name`: name of the composition file in CSV format
+3.  `power_w`: range of laser power in watts
+4.  `vel_ms`: range of velocity values in meters/seconds
+5.  `powder_thickness`: powder layer thickness in micrometers
+6.  `hatch_spacing`: hatch spacing in micrometers
+7.  `d_laser`: beam diameter in micrometers
+8.  `powder_grain_size`: average powder grain size in micrometers
+9.  `laser_wavelength`: machine laser wavelength in nanometers
 
 ## Main Functions
 
