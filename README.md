@@ -8,7 +8,7 @@ This Python script analyzes melt pool dimensions, defects, and printability in L
 - Calculates material properties using the rule of mixtures and composition-based feature vector (CBFV) using the Oliynyk dataset
 - In addition to these properties, other properties are calculated
 - Predicts melt pool dimensions using analytical, scaled, or neural network-based E-T models.
-- 
+  
 
 
 ---
