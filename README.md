@@ -115,6 +115,7 @@ The code evaluates each combination criteria, and there are 12 columns with resu
 1. Load and preprocess the input composition data and the THERMOCALC calculated properties. 
 2. Generate thermodynamic properties using `ROM_THERMO()`.
 3. Compute dimensionless parameters with `melt_pool_dimensionless()`.
+4. Run E-T thermal models and allow for the code to run entirely through and obtain the Package_ouput file.
 5. Analyze defects and save results.
 
 ---
